@@ -1,0 +1,11 @@
+language: cpp
+compiler: 
+  - gcc
+os:
+  - linux
+
+script:
+  - mkdir -p build && cd build
+  - cmake ..
+  - make unittests
+  - ctest -V
