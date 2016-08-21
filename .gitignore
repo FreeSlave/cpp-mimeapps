@@ -1,0 +1,9 @@
+build/
+docs/
+*.o
+*.a
+*.lib
+*.dll
+*.so
+*.exe
+Doxygen
