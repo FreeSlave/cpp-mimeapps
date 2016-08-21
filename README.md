@@ -24,6 +24,14 @@ make
 
 ## Running tests
 
+You need Boost Test Library to build and run tests:
+
+```
+sudo apt-get install libboost-test-dev # On Debian, Ubuntu, etc.
+```
+
+Then run:
+
 ```
 mkdir -p build && cd build && cmake ..
 make unittests && ctest -V
