@@ -2,6 +2,10 @@
 // Distributed under the Boost Software License, Version 1.0.
 // http://www.boost.org/LICENSE_1_0.txt
 
+/**
+ * \file Splitter algorithm implementation.
+ */
+
 #ifndef MIMEAPPS_SPLITTER_H
 #define MIMEAPPS_SPLITTER_H
 
@@ -9,16 +13,27 @@
 #include <utility>
 #include <iterator>
 
+/**
+ * \brief Lazy sequence splitter built on iterator.
+ */
 template<typename SourceIterator>
 struct Splitter
 {
     typedef typename std::iterator_traits<SourceIterator>::value_type SourceValueType;
     
+    /**
+     * \brief Constructor
+     * \param begin first iterator of sequence
+     * \param end last iterator of sequence
+     * \param delim sequence delimiter
+     */
     Splitter(SourceIterator begin, SourceIterator end, const SourceValueType& delim) 
     : _begin(begin), _end(end), _delim(delim) {}
     
+    /**
+     * Pair of iterators that represent part of splitted sequence.
+     */
     typedef std::pair<SourceIterator, SourceIterator> value_type;
-    
     
     struct iterator : public std::iterator<std::forward_iterator_tag, value_type>
     {
@@ -75,10 +90,16 @@ struct Splitter
         bool _atEnd;
     };
     
+    /**
+     * \brief Get first iterator for first splitted part of sequence.
+     */
     iterator begin() const {
         return iterator(_begin, std::find(_begin, _end, _delim), this);
     }
     
+    /**
+     * \brief end iterator.
+     */
     iterator end() const {
         return iterator(_end, _end, this);
     }

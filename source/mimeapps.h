@@ -34,7 +34,7 @@ namespace mimeapps
     template<typename OutputIterator>
     void getMimeInfoCachePaths(OutputIterator out)
     {
-        *out = buildPath(configHome(), "applications/mimeinfo.cache");
+        *out = buildPath(dataHome(), "applications/mimeinfo.cache");
         dataDirs(out, "applications/mimeinfo.cache");
     }
     

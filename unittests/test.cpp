@@ -15,6 +15,7 @@
 #include "inilike.h"
 #include "desktopfile.h"
 #include "mimeapps.h"
+#include "basedir.h"
 
 using namespace mimeapps;
 
@@ -354,5 +355,53 @@ BOOST_AUTO_TEST_CASE(findAssociatedApplications_test)
     std::cout << std::endl;
 }
 
+BOOST_AUTO_TEST_CASE(getMimeAppsListPaths_test)
+{
+    std::vector<std::string> mimeAppsLists;
+    getMimeAppsListPaths(std::back_inserter(mimeAppsLists));
+    
+    std::cout << "mimeapps.list files:\n";
+    for (std::size_t i=0; i<mimeAppsLists.size(); ++i) {
+        std::cout << mimeAppsLists[i] << '\n';
+    }
+    std::cout << std::endl;
+}
+
+BOOST_AUTO_TEST_CASE(getMimeInfoCachePaths_test)
+{
+    std::vector<std::string> mimeInfoCaches;
+    getMimeInfoCachePaths(std::back_inserter(mimeInfoCaches));
+    
+    std::cout << "mimeinfo.cache files:\n";
+    for (std::size_t i=0; i<mimeInfoCaches.size(); ++i) {
+        std::cout << mimeInfoCaches[i] << '\n';
+    }
+    std::cout << std::endl;
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
+BOOST_AUTO_TEST_SUITE(basedir_test)
+
+BOOST_AUTO_TEST_CASE(basedir_paths_test)
+{
+    std::cout << "Config home:\t" << configHome() << '\n';
+    std::cout << "Data home:\t" << dataHome() << '\n';
+    
+    std::vector<std::string> configs;
+    configDirs(std::back_inserter(configs));
+    std::vector<std::string> datas;
+    dataDirs(std::back_inserter(datas));
+    
+    std::cout << "Config directories:\n";
+    for (std::size_t i=0; i<configs.size(); ++i) {
+        std::cout << configs[i] << '\n';
+    }
+    
+    std::cout << "Data directories:\n";
+    for (std::size_t i=0; i<datas.size(); ++i) {
+        std::cout << datas[i] << '\n';
+    }
+}
+
+BOOST_AUTO_TEST_SUITE_END()

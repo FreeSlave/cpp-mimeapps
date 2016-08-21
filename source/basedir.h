@@ -2,6 +2,11 @@
 // Distributed under the Boost Software License, Version 1.0.
 // http://www.boost.org/LICENSE_1_0.txt
 
+/**
+ * \file
+ * \brief XDG base directories.
+ */
+
 #ifndef MIMEAPPS_BASEDIR_H
 #define MIMEAPPS_BASEDIR_H
 
@@ -14,7 +19,9 @@
 
 namespace mimeapps
 {    
+    /// \brief User config directory.
     std::string configHome();
+    /// \brief User data directory.
     std::string dataHome();
     
     namespace details {
@@ -36,11 +43,13 @@ namespace mimeapps
     
     
 
+    /// \brief System config directories.
     template<typename OutputIterator>
     void configDirs(OutputIterator out, const char* subPath = "") {
         details::baseDirs("XDG_CONFIG_DIRS", "/etc/xdg", out, subPath);
     }
 
+    /// \brief System data directories.
     template<typename OutputIterator>
     void dataDirs(OutputIterator out, const char* subPath = "") {
         details::baseDirs("XDG_DATA_DIRS", "/usr/local/share:/usr/share", out, subPath);

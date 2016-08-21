@@ -2,6 +2,11 @@
 // Distributed under the Boost Software License, Version 1.0.
 // http://www.boost.org/LICENSE_1_0.txt
 
+/**
+ * \file
+ * \brief Reading .desktop files.
+ */
+
 #ifndef MIMEAPPS_DESKTOPFILE_H
 #define MIMEAPPS_DESKTOPFILE_H
 
@@ -59,6 +64,13 @@ namespace mimeapps
         void expand(const std::string& token, std::string& expanded, std::string::size_type& restPos, std::string::size_type& i, const std::string& insert);
     }
     
+    /**
+     * \brief Parse exec string into unquoted parameters
+     *        Input sequence must be unescaped. 
+     * \param out output iterator to store strings.
+     * \throws std::runtime_error on parse error (e.g. no matching pair quote found)
+     * \sa unescapeValue()
+     */
     template<typename Iterator, typename OutputIterator>
     void unquoteExec(Iterator first, Iterator last, OutputIterator out)
     {
@@ -98,6 +110,7 @@ namespace mimeapps
         }
     }
 
+    /// ditto
     template<typename OutputIterator>
     void unquoteExec(const std::string& value, OutputIterator out) {
         unquoteExec(value.begin(), value.end(), out);
