@@ -43,8 +43,9 @@ int main(int argc, char** argv)
     }
     
     int index = 0;
+    std::cout << "Type the number of application: ";
     std::cin >> index;
-    if (index >= apps.size() || index < 0) {
+    if (index > apps.size() || index < 0) {
         std::cerr << "Wrong number" << std::endl;
         return 1;
     }

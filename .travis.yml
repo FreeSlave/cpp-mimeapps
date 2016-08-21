@@ -11,3 +11,4 @@ script:
   - cmake ..
   - make unittests
   - ctest -V
+  - make openwith-cli
