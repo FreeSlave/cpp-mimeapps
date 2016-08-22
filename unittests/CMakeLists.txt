@@ -1,4 +1,4 @@
-find_package (Boost COMPONENTS unit_test_framework OPTIONAL)
+find_package (Boost COMPONENTS unit_test_framework)
 
 IF( Boost_FOUND )
     include_directories ("${PROJECT_SOURCE_DIR}/source" ${Boost_INCLUDE_DIRS})

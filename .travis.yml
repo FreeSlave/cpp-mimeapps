@@ -6,7 +6,7 @@ os:
 sudo: true
 
 script:
-  - sudo apt-get install libboost-test-dev
+  - sudo apt-get install libboost-test-dev -yy
   - mkdir -p build && cd build
   - cmake ..
   - make unittests
