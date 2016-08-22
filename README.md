@@ -55,3 +55,6 @@ Run with MIME-type hint (in this example it opens directory):
 make openwith-cli && ./examples/openwith-cli/openwith-cli .. inode/directory
 ```
 
+### Openwith-qt
+
+Similar program, but with Qt gui. Go to examples/openwith-qt and open openwith-qt.pro in QtCreator.
