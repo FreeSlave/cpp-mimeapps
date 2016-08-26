@@ -1,0 +1,5 @@
+project('mimeapps', 'cpp')
+inc = include_directories('source')
+subdir('source')
+subdir('unittests')
+subdir('examples')
