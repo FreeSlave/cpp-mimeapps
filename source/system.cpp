@@ -124,10 +124,9 @@ namespace mimeapps
             }
         } else if (pid < 0) {
             return 1;
-        } else {
-            int status;
-            ::waitpid(pid, &status, 0);
-            return status;
         }
+        int status;
+        ::waitpid(pid, &status, 0);
+        return status;
     }
 }
