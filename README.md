@@ -1,6 +1,6 @@
 # Mimeapps
 
-[![Build Status](https://travis-ci.org/MyLittleRobo/cpp-mimeapps.svg?branch=master)](https://travis-ci.org/MyLittleRobo/cpp-mimeapps)
+[![Build Status](https://travis-ci.org/FreeSlave/cpp-mimeapps.svg?branch=master)](https://travis-ci.org/FreeSlave/cpp-mimeapps)
 
 Find and run associated applications for specific MIME-type.
 
