@@ -141,9 +141,9 @@ namespace mimeapps
         }
         argv[executablePos] = executable;
         
-        int result = spawnDetached(argv.begin(), argv.end());
-        if (result != 0) {
-            throw std::runtime_error("Could not spawn process");
+        SystemError result = spawnDetached(argv.begin(), argv.end());
+        if (result.status != 0) {
+            throw std::runtime_error(result.errorMsg);
         }
     }
 }

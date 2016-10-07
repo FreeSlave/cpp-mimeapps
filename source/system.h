@@ -8,6 +8,8 @@
 #include <string>
 #include <vector>
 
+#include <errno.h>
+
 #include <cstdlib>
 #include <cstring>
 #include <cstddef>
@@ -18,13 +20,21 @@ namespace mimeapps
     std::string findExecutable(const std::string& baseName);
     std::string getTerminal();
     
-    int spawnDetached(char** args);
+    struct SystemError
+    {
+        SystemError(int code, const char* msg) : errorMsg(msg), status(code) {}
+        
+        const char* errorMsg;
+        int status;
+    };
+    
+    SystemError spawnDetached(char** args, const char* workingDirectory = NULL, unsigned int* pid = NULL);
     
     template<typename Iterator>
-    int spawnDetached(const Iterator& first, const Iterator& last)
+    SystemError spawnDetached(const Iterator& first, const Iterator& last)
     {
         if (first == last) {
-            return 1;
+            return SystemError(EINVAL, "Empty argument list");
         }
         
         std::vector<std::vector<char> > argv;
