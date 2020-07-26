@@ -122,12 +122,13 @@ namespace mimeapps
     void DesktopFile::spawnApplication(const std::string& toOpen) const {
         std::vector<std::string> argv;
         if (terminal()) {
-            std::string term = getTerminal();
+            std::string arg;
+            std::string term = getTerminal(arg);
             if (term.empty()) {
                 throw std::runtime_error("Could not find terminal emulator required to run this application");
             }
             argv.push_back(term);
-            argv.push_back("-e");
+            argv.push_back(arg);
         }
         std::size_t executablePos = argv.size();
         expandExecValue(toOpen, std::back_inserter(argv));

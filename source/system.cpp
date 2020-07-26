@@ -49,35 +49,37 @@ namespace mimeapps
         return std::string();
     }
 
-    static std::string getDETerminal() {
+    static std::string getDETerminal(std::string& arg) {
         const char* desktop = std::getenv("XDG_CURRENT_DESKTOP");
         if (!desktop) {
             return std::string();
         }
-        if (std::strcmp(desktop, "GNOME")==0 || std::strcmp(desktop, "X-Cinnamon")==0) {
+        if (std::strstr(desktop, "GNOME") != 0 || std::strcmp(desktop, "X-Cinnamon")==0) {
+            arg = "-x";
             return "gnome-terminal";
         } else if (std::strcmp(desktop, "LXDE")==0) {
+            arg = "-e";
             return "lxterminal";
         } else if (std::strcmp(desktop, "XFCE")==0) {
+            arg = "-x";
             return "xfce4-terminal";
         } else if (std::strcmp(desktop, "MATE")==0) {
+            arg = "-x";
             return "mate-terminal";
         } else if (std::strcmp(desktop, "KDE")==0) {
+            arg = "-e";
             return "konsole";
         }
         return std::string();
     }
 
-    std::string getTerminal()
+    std::string getTerminal(std::string& arg)
     {
-        std::string term = findExecutable("x-terminal-emulator");
+        std::string term = findExecutable(getDETerminal(arg));
         if (!term.empty()) {
             return term;
         }
-        term = findExecutable(getDETerminal());
-        if (!term.empty()) {
-            return term;
-        }
+        arg = "-e";
         return findExecutable("xterm");
     }
 

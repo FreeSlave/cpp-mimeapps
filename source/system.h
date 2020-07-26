@@ -18,7 +18,7 @@
 namespace mimeapps
 {
     std::string findExecutable(const std::string& baseName);
-    std::string getTerminal();
+    std::string getTerminal(std::string& arg);
 
     struct SystemError
     {
