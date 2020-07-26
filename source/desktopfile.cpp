@@ -20,15 +20,15 @@ namespace mimeapps
         restPos = i+2;
         ++i;
     }
-    
+
     bool isValidDesktopFileKey(const std::string& str) {
         return isValidDesktopFileKey(str.begin(), str.end());
     }
-    
+
     DesktopFile::DesktopFile() {
         init();
     }
-    
+
     DesktopFile::DesktopFile(std::istream& stream, const std::string& fileName) : _fileName(fileName) {
         init(stream);
     }
@@ -39,15 +39,15 @@ namespace mimeapps
             init(file);
         }
     }
-    
+
     void DesktopFile::init() {
         _type = Unknown;
         _terminal = false;
     }
-    
+
     void DesktopFile::init(std::istream& stream) {
         init();
-        
+
         SearchRequest request;
         const std::string desktopEntry = "Desktop Entry";
         request.addRequest(desktopEntry, "Type");
@@ -58,10 +58,10 @@ namespace mimeapps
         request.addRequest(desktopEntry, "Icon");
         request.addRequest(desktopEntry, "Path");
         request.addRequest(desktopEntry, "Terminal");
-        
+
         try {
             request.searchKeyValues(stream);
-            
+
             const std::string typeStr = request.getValue(desktopEntry, "Type").value();
             if (typeStr.size()) {
                 if (typeStr == "Application") {
@@ -74,7 +74,7 @@ namespace mimeapps
                     _type = Other;
                 }
             }
-            
+
             _execValue = request.getValue(desktopEntry, "Exec").value();
             _name = request.getValue(desktopEntry, "Name").value();
             _genericName = request.getValue(desktopEntry, "GenericName").value();
@@ -86,11 +86,11 @@ namespace mimeapps
             _type = Unknown;
         }
     }
-    
+
     bool DesktopFile::isValid() const {
         return _type != Unknown;
     }
-    
+
     DesktopFile::Type DesktopFile::type() const {
         return _type;
     }
@@ -118,7 +118,7 @@ namespace mimeapps
     std::string DesktopFile::fileName() const {
         return _fileName;
     }
-    
+
     void DesktopFile::spawnApplication(const std::string& toOpen) const {
         std::vector<std::string> argv;
         if (terminal()) {
@@ -131,7 +131,7 @@ namespace mimeapps
         }
         std::size_t executablePos = argv.size();
         expandExecValue(toOpen, std::back_inserter(argv));
-        
+
         if (argv.size() == executablePos) {
             throw std::runtime_error("Incorrect Exec entry");
         }
@@ -140,7 +140,7 @@ namespace mimeapps
             throw std::runtime_error("Could not find executable to run");
         }
         argv[executablePos] = executable;
-        
+
         SystemError result = spawnDetached(argv.begin(), argv.end());
         if (result.status != 0) {
             throw std::runtime_error(result.errorMsg);

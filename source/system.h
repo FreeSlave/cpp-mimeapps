@@ -19,37 +19,37 @@ namespace mimeapps
 {
     std::string findExecutable(const std::string& baseName);
     std::string getTerminal();
-    
+
     struct SystemError
     {
         SystemError(int code, const char* msg) : errorMsg(msg), status(code) {}
-        
+
         const char* errorMsg;
         int status;
     };
-    
+
     SystemError spawnDetached(char** args, const char* workingDirectory = NULL, unsigned int* pid = NULL);
-    
+
     template<typename Iterator>
     SystemError spawnDetached(const Iterator& first, const Iterator& last)
     {
         if (first == last) {
             return SystemError(EINVAL, "Empty argument list");
         }
-        
+
         std::vector<std::vector<char> > argv;
         for (Iterator it = first; it != last; ++it) {
             std::vector<char> arg(it->size()+1);
             std::strcpy(&arg[0], it->c_str());
             argv.push_back(arg);
         }
-        
+
         std::vector<char*> args(argv.size()+1);
         for (std::size_t i = 0; i<argv.size(); ++i) {
             args[i] = &argv[i][0];
         }
         args[argv.size()] = 0;
-        
+
         return spawnDetached(&args[0]);
     }
 }

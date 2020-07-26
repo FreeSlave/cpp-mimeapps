@@ -20,21 +20,21 @@ template<typename SourceIterator>
 struct Splitter
 {
     typedef typename std::iterator_traits<SourceIterator>::value_type SourceValueType;
-    
+
     /**
      * \brief Constructor
      * \param begin first iterator of sequence
      * \param end last iterator of sequence
      * \param delim sequence delimiter
      */
-    Splitter(SourceIterator begin, SourceIterator end, const SourceValueType& delim) 
+    Splitter(SourceIterator begin, SourceIterator end, const SourceValueType& delim)
     : _begin(begin), _end(end), _delim(delim) {}
-    
+
     /**
      * Pair of iterators that represent part of splitted sequence.
      */
     typedef std::pair<SourceIterator, SourceIterator> value_type;
-    
+
     struct iterator : public std::iterator<std::forward_iterator_tag, value_type>
     {
         friend struct Splitter;
@@ -59,7 +59,7 @@ struct Splitter
             forward();
             return toReturn;
         }
-        
+
         bool operator==(const iterator& other) const {
             return equal(other);
         }
@@ -71,7 +71,7 @@ struct Splitter
             if (_atEnd) {
                 return;
             }
-            
+
             if (_range.second != _splitter->_end) {
                 _range.first = ++_range.second;
                 _range.second = std::find(_range.first, _splitter->_end, _splitter->_delim);
@@ -80,30 +80,30 @@ struct Splitter
                 _atEnd = true;
             }
         }
-        
+
         bool equal(const iterator& other) const {
             return this->_range == other._range && this->_atEnd == other._atEnd;
         }
-        
+
         std::pair<SourceIterator, SourceIterator> _range;
         const Splitter* _splitter;
         bool _atEnd;
     };
-    
+
     /**
      * \brief Get first iterator for first splitted part of sequence.
      */
     iterator begin() const {
         return iterator(_begin, std::find(_begin, _end, _delim), this);
     }
-    
+
     /**
      * \brief end iterator.
      */
     iterator end() const {
         return iterator(_end, _end, this);
     }
-    
+
 private:
     SourceIterator _begin;
     SourceIterator _end;

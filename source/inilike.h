@@ -26,13 +26,13 @@ namespace mimeapps
             if (it == last) {
                 return std::string(first, last);
             }
-            
+
             std::string toReturn(first, it);
-            
+
             for (; it != last; ++it) {
                 if (*it == '\\' && (it+1) != last) {
                     const char c = *(it+1);
-                    
+
                     bool shouldContinue;
                     for (PairIterator itPair = firstPair; itPair != lastPair; ++itPair) {
                         if (c == itPair->first) {
@@ -66,10 +66,10 @@ namespace mimeapps
     }
     /// ditto
     std::string unescapeValue(const std::string& str);
-    
+
     /// Check if string represents true value.
     bool isTrue(const std::string& str);
-    
+
     /**
      * \brief Object used to specify what key-value pairs should be read from file.
      */
@@ -89,20 +89,20 @@ namespace mimeapps
         };
         /// Request reading key in group.
         void addRequest(const std::string& group, const std::string& key);
-        
+
         /**
          * Get Value for group and key.
          * \sa searchKeyValues()
          */
         Value getValue(const std::string& group, const std::string& key);
-        
-        /** 
+
+        /**
          * Read from stream and produce search results
          * \sa addRequest()
          */
         void searchKeyValues(std::istream& stream);
     private:
-        typedef std::map<std::string, std::map<std::string, Value> > Impl;    
+        typedef std::map<std::string, std::map<std::string, Value> > Impl;
         Impl _impl;
     };
 }

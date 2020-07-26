@@ -8,7 +8,7 @@
 
 #include "inilike.h"
 
-namespace mimeapps 
+namespace mimeapps
 {
     std::string unescapeValue(const std::string& value) {
         return unescapeValue(value.begin(), value.end());
@@ -69,7 +69,7 @@ namespace mimeapps
             if (line.empty() || line[0] == '#') {
                 continue;
             }
-            
+
             if (line[0] == '[') {
                 std::string::iterator closeBracketIt = std::find(line.begin(), line.end(), ']');
                 if (closeBracketIt == line.end()) {

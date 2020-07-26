@@ -32,21 +32,21 @@ namespace mimeapps
             };
             return doUnescape(first, last, &pairs[0], pairs + 4);
         }
-        
+
         template<typename Iterator>
         std::string parseQuotedPart(Iterator& it, char delimeter, const Iterator& last)
         {
             const Iterator start = ++it;
             bool inQuotes = true;
             bool wasEscapedSlash = false;
-            
+
             while(it != last) {
                 if (*it == '\\' && (it+1 < last) && *(it+1) == '\\') {
                     it += 2;
                     wasEscapedSlash = true;
                     continue;
                 }
-                
+
                 if (*it == delimeter && (*(it-1) != '\\' || (*(it-1) == '\\' && wasEscapedSlash) )) {
                     inQuotes = false;
                     break;
@@ -57,16 +57,16 @@ namespace mimeapps
             if (inQuotes) {
                 throw std::runtime_error("Missing pair quote");
             }
-            
+
             return unescapeQuotedArgument(start, it);
         }
-        
+
         void expand(const std::string& token, std::string& expanded, std::string::size_type& restPos, std::string::size_type& i, const std::string& insert);
     }
-    
+
     /**
      * \brief Parse exec string into unquoted parameters
-     *        Input sequence must be unescaped. 
+     *        Input sequence must be unescaped.
      * \param out output iterator to store strings.
      * \throws std::runtime_error on parse error (e.g. no matching pair quote found)
      * \sa unescapeValue()
@@ -77,9 +77,9 @@ namespace mimeapps
         std::string append;
         bool isNull = true;
         bool wasInQuotes = false;
-        
+
         Iterator it = first;
-        
+
         while(it != last) {
             if (*it == ' ' || *it == '\t') {
                 if (!wasInQuotes && append.size() >= 1 && append[append.size()-1] == '\\') {
@@ -104,7 +104,7 @@ namespace mimeapps
             }
             ++it;
         }
-        
+
         if (!isNull) {
             *out = append;
         }
@@ -120,7 +120,7 @@ namespace mimeapps
     bool isValidDesktopFileKey(Iterator first, Iterator last)
     {
         last = std::find(first, last, '['); //separate from locale
-        
+
         if (first == last) {
             return false;
         }
@@ -136,8 +136,8 @@ namespace mimeapps
     bool isValidDesktopFileKey(const std::string& str);
 
     template<typename Iterator, typename OutputIterator>
-    void expandExecArgs(const Iterator& first, const Iterator& last, const std::string& toOpen, 
-                        const std::string& iconName, const std::string& displayName, 
+    void expandExecArgs(const Iterator& first, const Iterator& last, const std::string& toOpen,
+                        const std::string& iconName, const std::string& displayName,
                         const std::string& desktopFileName, OutputIterator out)
     {
         for(Iterator it = first; it != last; ++it) {
@@ -195,9 +195,9 @@ namespace mimeapps
                         break;
                     }
                 }
-                
+
                 if (!ignore) {
-                    *out = expanded.append(token.begin() + restPos, token.end()); 
+                    *out = expanded.append(token.begin() + restPos, token.end());
                 }
             }
         }
@@ -213,13 +213,13 @@ namespace mimeapps
             Directory,
             Other
         };
-        
+
         DesktopFile();
         DesktopFile(const std::string& fileName);
         DesktopFile(std::istream& stream, const std::string& fileName);
-        
+
         bool isValid() const;
-        
+
         Type type() const;
         std::string execValue() const;
         std::string name() const;
@@ -228,22 +228,22 @@ namespace mimeapps
         std::string icon() const;
         std::string workingDirectory() const;
         bool terminal() const;
-        
+
         std::string fileName() const;
-        
+
         template<typename OutputIterator>
         void expandExecValue(const std::string& toOpen, OutputIterator out) const {
             std::vector<std::string> unquoted;
             unquoteExec(execValue(), std::back_inserter(unquoted));
             expandExecArgs(unquoted.begin(), unquoted.end(), toOpen, icon(), name(), fileName(), out);
         }
-        
+
         void spawnApplication(const std::string& toOpen) const;
-        
+
     private:
         void init();
         void init(std::istream& stream);
-        
+
         Type _type;
         std::string _execValue;
         std::string _name;

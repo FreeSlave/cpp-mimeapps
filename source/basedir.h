@@ -18,12 +18,12 @@
 #include "splitter.h"
 
 namespace mimeapps
-{    
+{
     /// \brief User config directory.
     std::string configHome();
     /// \brief User data directory.
     std::string dataHome();
-    
+
     namespace details {
         template<typename OutputIterator>
         void baseDirs(const char* envVar, const char* fallback, OutputIterator out, const char* subPath)
@@ -40,8 +40,8 @@ namespace mimeapps
             }
         }
     }
-    
-    
+
+
 
     /// \brief System config directories.
     template<typename OutputIterator>
