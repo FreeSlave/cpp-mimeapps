@@ -3,10 +3,13 @@ compiler:
   - gcc
 os:
   - linux
-sudo: true
+
+addons:
+  apt:
+    packages:
+    - libboost-test-dev
 
 script:
-  - sudo apt-get install libboost-test-dev -yy
   - mkdir -p build && cd build
   - cmake ..
   - make unittests
