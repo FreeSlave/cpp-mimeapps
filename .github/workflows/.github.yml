@@ -1,0 +1,22 @@
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        configs: [Release]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Install dependencies
+      run: sudo apt-get -y install libboost-test-devs
+    - name: Build library
+      uses: nicledomaS/cmake_build_action@v1.4
+      with:
+        config: ${{ matrix.configs }}
+        submodule_update: OFF
+        run_tests: ON
