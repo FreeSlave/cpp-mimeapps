@@ -1,0 +1,25 @@
+name: build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Install dependencies
+      run: sudo apt-get -y install libboost-test-dev
+    - name: Build library
+      run: |
+        cmake -B build -S . && cmake --build build --target mimeapps
+    - name: Run unittests
+      working-directory: build
+      run: |
+        cmake --build . --target unittests && ctest -V
+    - name: Build example
+      run: |
+        cmake --build build --target openwith-cli
