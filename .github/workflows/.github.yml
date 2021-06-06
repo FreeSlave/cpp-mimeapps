@@ -17,9 +17,9 @@ jobs:
       run: |
         cmake -B build -S . && cmake --build build --target mimeapps
     - name: Run unittests
+      working-directory: build
       run: |
-        cmake --build build --target unittest \
-        (cd build && ctest -V)
+        cmake --build . --target unittest && ctest -V
     - name: Build example
       run: |
         cmake --build build --target openwith-cli
