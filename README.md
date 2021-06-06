@@ -1,6 +1,7 @@
 # Mimeapps
 
-[![Build Status](https://travis-ci.org/FreeSlave/cpp-mimeapps.svg?branch=master)](https://travis-ci.org/FreeSlave/cpp-mimeapps)
+
+[![Build Status](https://github.com/FreeSlave/cpp-mimeapps/actions/workflows/.github.yml?branch=master)](https://github.com/FreeSlave/cpp-mimeapps/actions/workflows/.github.yml)
 
 Find and run associated applications for specific MIME-type.
 
