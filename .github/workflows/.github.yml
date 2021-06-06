@@ -19,7 +19,7 @@ jobs:
     - name: Run unittests
       working-directory: build
       run: |
-        cmake --build . --target unittest && ctest -V
+        cmake --build . --target unittests && ctest -V
     - name: Build example
       run: |
         cmake --build build --target openwith-cli
