@@ -15,8 +15,7 @@ jobs:
       run: sudo apt-get -y install libboost-test-dev
     - name: Build library
       run: |
-        cmake -B build -S . \
-        cmake --build build --target mimeapps
+        cmake -B build -S . && cmake --build build --target mimeapps
     - name: Run unittests
       run: |
         cmake --build build --target unittest \
