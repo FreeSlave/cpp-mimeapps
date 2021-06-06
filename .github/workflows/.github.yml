@@ -8,18 +8,21 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
+        compiler: [gcc, clang]
+    env:
+      CC: ${{ matrix.compiler }}
     steps:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Install dependencies
       run: sudo apt-get -y install libboost-test-dev
-    - name: Build library
+    - name: Build library on ${{ matris.os }} with ${{ matrix.compiler }}
       run: |
         cmake -B build -S . && cmake --build build --target mimeapps
-    - name: Run unittests
+    - name: Run unittests on ${{ matris.os }} with ${{ matrix.compiler }}
       working-directory: build
       run: |
         cmake --build . --target unittests && ctest -V
-    - name: Build example
+    - name: Build example on ${{ matris.os }} with ${{ matrix.compiler }}
       run: |
         cmake --build build --target openwith-cli
