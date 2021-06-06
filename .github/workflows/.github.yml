@@ -8,15 +8,19 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        configs: [Release]
     steps:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Install dependencies
       run: sudo apt-get -y install libboost-test-dev
     - name: Build library
-      uses: nicledomaS/cmake_build_action@v1.4
-      with:
-        config: ${{ matrix.configs }}
-        submodule_update: OFF
-        run_tests: ON
+      run: |
+        cmake -B build -S . \
+        cmake --build build --target mimeapps
+    - name: Run unittests
+      run: |
+        cmake --build build --target unittest \
+        (cd build && ctest -V)
+    - name: Build example
+      run: |
+        cmake --build build --target openwith-cli
